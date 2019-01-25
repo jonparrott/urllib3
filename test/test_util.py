@@ -265,7 +265,12 @@ class TestUtil(object):
         # NodeJS unicode -> double dot
         (u"http://google.com/\uff2e\uff2e/abc", Url("http",
                                                     host="google.com",
-                                                    path='/%ef%bc%ae%ef%bc%ae/abc'))
+                                                    path='/%ef%bc%ae%ef%bc%ae/abc')),
+
+        # JVN#13973206
+        (u"http://localhost\\@google.com:12345", False),
+        (u"javascript:a='@google.com:12345/';alert(0)", False),
+        (u"localhost:8000/#://hogehoge.com:1234", False),
     ]
 
     @pytest.mark.parametrize("url, expected_url", url_vulnerabilities)
